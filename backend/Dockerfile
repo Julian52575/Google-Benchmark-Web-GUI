@@ -9,6 +9,6 @@ COPY . .
 
 ENV BENCHMARK_DIR=/data
 
-EXPOSE 5502
+EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5502"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
