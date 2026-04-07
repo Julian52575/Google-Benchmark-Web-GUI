@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    env_file:
+      - .env
+      - ./backend/.env
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    volumes:
+      - ${BENCH_DIR}:/data
+    command: >
+      uvicorn main:app
+      --host 0.0.0.0
+      --port ${BACKEND_PORT}
+
+  #frontend:
+  #  build: ./frontend
+  #  env_file:
+  #    - .env
+  #    - ./frontend/.env
+  #  ports:
+  #    - "${FRONTEND_PORT}:80"
