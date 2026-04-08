@@ -16,9 +16,8 @@ Simplest gui viewer and comparer for google benchmarks.
 | name | usage | default |
 | ---- | ----- | ------- |
 | GITHUB_REPO | The repository that hosts the project, used to read commit comment |  |
-| BACKEND_PORT | The port to exposes the backend to | 5502 |
 | FRONTEND_PORT | The port to exposes the frontend to | 5501 |
-| BENCHMARK_DIR=/var/benchmarksResults/myrepository/ | The directory that hosts the benchmarks logs | /var/benchmarksResults/myrepository/ | 
+| BENCHMARK_DIR= | The directory that hosts the benchmarks logs | /var/benchmarksResults/myrepository/ |
 | VITE_API_URL="" | The backend url if you want/need to host it on another machine that the frontend |  |
 ------------------------- 
 

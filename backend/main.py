@@ -10,20 +10,6 @@ app = FastAPI()
 BENCH_DIR = Path(os.getenv("BENCHMARK_DIR", "/data"))
 GITHUB_REPO = os.getenv("GITHUB_REPO", "https://github.com/user/repo")
 
-# allow frontend origin if not VITE_API_URL
-origins = []
-
-if not os.getenv("VITE_API_URL"):
-    origins.append("http://localhost:" + (os.getenv("FRONTEND_PORT", "5501")))
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,          # or ["*"] to allow all
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 def parse_filename(filename: str):
     # benchmarkresults_<commit>_<branch>.json
     if not filename.startswith("benchmarkresults_"):
