@@ -10,10 +10,11 @@ app = FastAPI()
 BENCH_DIR = Path(os.getenv("BENCHMARK_DIR", "/data"))
 GITHUB_REPO = os.getenv("GITHUB_REPO", "https://github.com/user/repo")
 
-# Only allow frontend origin
-origins = [
-    "http://localhost:" + (os.getenv("FRONTEND_PORT", "5501")),
-]
+# allow frontend origin if not VITE_API_URL
+origins = []
+
+if not os.getenv("VITE_API_URL"):
+    origins.append("http://localhost:" + (os.getenv("FRONTEND_PORT", "5501")))
 
 app.add_middleware(
     CORSMiddleware,
@@ -49,8 +50,8 @@ def get_files():
     return files
 
 
-@app.get("/api/logs")
-def get_logs(branch: str = "dev", limit: int = 10):
+@app.get("/api/files")
+def get_files_endpoint(branch: str = "dev", limit: int = 10):
     files = [
         f for f in get_files()
         if f["branch"] == branch
@@ -72,7 +73,7 @@ def get_logs(branch: str = "dev", limit: int = 10):
     ]
 
 
-@app.get("/api/benchmarks")
+@app.get("/api/benchmark")
 def get_benchmarks(file: str):
     full_path = BENCH_DIR / file
 
@@ -89,7 +90,6 @@ def get_benchmarks(file: str):
             "real_time": b["real_time"],
         }
         for b in data["benchmarks"]
-        if b.get("aggregate_name") == "mean"
     ]
 
     return {
