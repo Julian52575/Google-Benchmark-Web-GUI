@@ -1,6 +1,6 @@
 import type { LogFile, BenchmarkResponse } from "../types";
 
-const API = import.meta.env.VITE_API_URL;
+const API = "http://localhost:" + (import.meta.env.BACKEND_PORT || "5502");
 
 export async function fetchLogs(branch: string, limit: number): Promise<LogFile[]> {
   const res = await fetch(`${API}/api/logs?branch=${branch}&limit=${limit}`);

@@ -1,13 +1,27 @@
 import os
 import json
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from pathlib import Path
 
 app = FastAPI()
 
-BENCH_DIR = Path(os.getenv("BENCHMARK_DIR", "/var/benchmarksResults/"))
+BENCH_DIR = Path(os.getenv("BENCHMARK_DIR", "/data"))
 GITHUB_REPO = os.getenv("GITHUB_REPO", "https://github.com/user/repo")
+
+# Only allow frontend origin
+origins = [
+    "http://localhost:" + (os.getenv("FRONTEND_PORT", "5501")),
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,          # or ["*"] to allow all
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def parse_filename(filename: str):
     # benchmarkresults_<commit>_<branch>.json

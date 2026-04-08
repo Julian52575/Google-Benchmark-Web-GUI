@@ -11,4 +11,15 @@ else
     exit 1
 fi
 
-$CONTAINER_RUNTIME-compose up --build -d --remove-orphans
+. backend/.env
+if [ ! -d ${BENCHMARK_DIR} ]; then
+    echo 'Benchmark directory does not exist. Creating...'
+    mkdir -p ${BENCHMARK_DIR} --verbose
+
+    if [ $? -ne 0 ]; then
+        echo "Failed to create benchmark directory. Please check permissions and try again."
+        exit 1
+    fi
+fi;
+
+$CONTAINER_RUNTIME-compose up --build --remove-orphans --force-recreate
